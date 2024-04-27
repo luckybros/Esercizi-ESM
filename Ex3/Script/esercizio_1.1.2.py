@@ -34,3 +34,8 @@ import scipy.ndimage as ndi
 x = ml.leggiJPG("space.jpg")
 y = ml.smooth_media_aritmetica(x, 15)
 ml.showTwoImages(x, y, "Originale", "Blurred")
+z = ml.thresholding(y, 25)    #   si annullano tutti i valori minori della soglia 
+
+w = x * z
+
+ml.showImage(z, "Thresholding")

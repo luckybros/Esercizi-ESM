@@ -25,6 +25,11 @@ def leggiRAW(nomefile,nRighe,nColonne,tipo):
     #plt.imshow(x, clim = None, cmap = "gray") 
     return x
 
+def showImage(immagine, descrizione):
+    plt.figure()
+    plt.imshow(immagine, clim=None, cmap="gray")
+    plt.title(descrizione)
+    
 def showTwoImages(nomeImmagine1, nomeImmagine2, descrizione1, descrizione2):
     plt.figure()
     plt.subplot(1,2,1) 
@@ -53,5 +58,11 @@ def smooth_media_aritmetica(x, k):
     h = np.ones((k,k))/(k**2)
     y = ndi.correlate(x, h, mode="reflect")
     return y
+
+def thresholding(x, soglia):
+    max = np.max(x)
+    mask = x < (soglia/100)*max
+    x[mask] = 0 
+    return x
 
 #def loc_equaliz(x):
