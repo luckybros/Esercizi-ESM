@@ -15,7 +15,7 @@ import skimage.exposure as ex
 import scipy.ndimage as ndi
 
 x = np.float64(io.imread("test.jpg"))
-k = 3   # dimensione della maschera
+k = 27   # dimensione della maschera
 h = np.ones((k,k))/(k**2)
 y = ndi.correlate(x, h, mode="reflect")
 

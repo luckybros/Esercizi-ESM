@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Esercizio 1.1.1
+Operazioni aritmetche
 """
+
 import sys
 sys.path.append('/Users/luketto/Desktop/II Semestre IV Anno/ESM/Esercizi/Librerie')
 import MyLibrary as ml
@@ -12,10 +13,18 @@ import matplotlib.pyplot as plt # importa Matplotlib
 import scipy.ndimage as ndi     # importa Scipy per le immagini
 import skimage.io as io         # importa il modulo Input/Output di SK-Imagex
 import skimage.exposure as ex
-import scipy.ndimage as ndi
 
-x = ml.leggiJPG("test.jpg")
+x = io.imread("frattale.jpg")
 
-y = ml.smooth(x)
+y = x
 
-ml.showTwoImages(x, y, "Originale", "Blurred")
+for i in range(4):
+    y = bit.bitset(y, i, 0)
+    
+z = x - y
+
+plt.figure()
+plt.imshow(z, clim=None, cmap="gray")
+
+
+

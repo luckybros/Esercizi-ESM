@@ -13,7 +13,7 @@ import skimage.io as io         # importa il modulo Input/Output di SK-Imagex
 import skimage.exposure as ex
 
 def leggiJPG(nomefile): 
-    x = np.float32(io.imread(nomefile))
+    x = np.float64(io.imread(nomefile))
     #plt.figure()
     #plt.imshow(x, clim = None, cmap = "gray")   
     return x
@@ -38,5 +38,20 @@ def glob_equaliz(x):
     y = ex.equalize_hist(x)
     y = 255*y
     return y
+
+def smooth(x):
+    h = [[1, 2, 1],
+         [2, 4, 2],
+         [1, 2, 1]]
+    for i in range(len(h)):
+        for j in range(len(h[i])):
+            h[i][j] /= 16
+    y = ndi.correlate(x, h, mode="reflect")
+    return y
     
+def smooth_media_aritmetica(x, k):
+    h = np.ones((k,k))/(k**2)
+    y = ndi.correlate(x, h, mode="reflect")
+    return y
+
 #def loc_equaliz(x):
