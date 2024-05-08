@@ -38,6 +38,26 @@ def showTwoImages(nomeImmagine1, nomeImmagine2, descrizione1, descrizione2):
     plt.subplot(1,2,2) 
     plt.imshow(nomeImmagine2, clim=None, cmap="gray");
     plt.title(descrizione2)
+
+def show_three_images(image1, description1, image2, description2, image3, description3):
+    plt.figure(figsize=(12, 4))  # Imposta le dimensioni della figura
+
+    # Prima immagine
+    plt.subplot(1, 3, 1)
+    plt.imshow(image1, cmap='gray')  # Mostra l'immagine in scala di grigi
+    plt.title(description1)  # Imposta il titolo
+
+    # Seconda immagine
+    plt.subplot(1, 3, 2)
+    plt.imshow(image2, cmap='gray')
+    plt.title(description2)
+
+    # Terza immagine
+    plt.subplot(1, 3, 3)
+    plt.imshow(image3, cmap='gray')
+    plt.title(description3)
+
+    plt.show()  # Mostra la figura con tutte e tre le immagini
     
 def glob_equaliz(x): 
     y = ex.equalize_hist(x)
@@ -64,5 +84,17 @@ def thresholding(x, soglia):
     mask = x < (soglia/100)*max
     x[mask] = 0 
     return x
+
+def rgb2cmy(x):
+    y = 1.0 - x
+    return y
+
+def rgb2cmyk(x):
+    z = rgb2cmy(x)
+    k = np.min(z, 2)
+    c = z[:,:,0]
+    m = z[:,:,1]
+    y = z[:,:,2]
+    return np.stack((c,m,y,k),2)
 
 #def loc_equaliz(x):
