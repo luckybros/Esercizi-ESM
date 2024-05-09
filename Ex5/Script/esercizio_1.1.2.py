@@ -33,7 +33,12 @@ import scipy.ndimage as ndi
 
 
 f = ml.leggiJPG("fragole.jpg")
+f = f/255
 c = ml.leggiJPG("cubo.jpg")
+c = c/255
 
 f_h = col.rgb2hsv(f)
 c_h = col.rgb2hsv(c)
+
+ml.showTwoImages(f, f_h, "RGB", "HSV")
+ml.showTwoImages(c, c_h, "RGB", "HSV")

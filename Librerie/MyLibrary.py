@@ -97,4 +97,16 @@ def rgb2cmyk(x):
     y = z[:,:,2]
     return np.stack((c,m,y,k),2)
 
+def fourier_transform(x):
+    X = np.fft.fft2(x)
+    X = np.log(1+np.abs((np.fft.fftshift(X))))
+    return X
+
+def graph(Y):
+    m = np.fft.fftshift(np.fft.fftfreq(Y.shape[0]))
+    n = np.fft.fftshift(np.fft.fftfreq(Y.shape[1]))
+    ax = plt.figure().add_subplot(projection='3d')
+    l,k = np.meshgrid(n,m)
+    ax.plot_surface(l,k,Y, linewidth=0, cmap="jet")
+
 #def loc_equaliz(x):
