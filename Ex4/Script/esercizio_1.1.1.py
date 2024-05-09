@@ -27,7 +27,7 @@ ml.graph(CIRC)
 
 anelli = ml.leggiJPG("anelli.tif")
 ANELLI = np.fft.fft2(anelli)
-CIRC = np.log(1+np.abs((np.fft.fftshift(ANELLI))))
+ANELLI = np.log(1+np.abs((np.fft.fftshift(ANELLI))))
 ml.showTwoImages(anelli, ANELLI, "normale", "trasformata")
 ml.graph(ANELLI)
 
