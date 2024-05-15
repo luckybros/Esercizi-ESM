@@ -59,6 +59,13 @@ def show_three_images(image1, description1, image2, description2, image3, descri
 
     plt.show()  # Mostra la figura con tutte e tre le immagini
     
+def show_histogram(x):
+    n, b = np.histogram(x, np.arange(257))  # istogramma
+    plt.figure()
+    plt.bar(np.arange(256), n)
+    plt.axis([0,255,0,1.1*np.max(n)])
+    plt.title('Istogramma di %d' %x)
+    
 def glob_equaliz(x): 
     y = ex.equalize_hist(x)
     y = 255*y
