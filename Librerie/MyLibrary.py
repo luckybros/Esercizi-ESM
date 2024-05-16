@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt # importa Matplotlib
 import scipy.ndimage as ndi     # importa Scipy per le immagini
 import skimage.io as io         # importa il modulo Input/Output di SK-Imagex
 import skimage.exposure as ex
+from skimage.feature import local_binary_pattern
 
 def leggiJPG(nomefile): 
     x = np.float64(io.imread(nomefile))
@@ -65,6 +66,11 @@ def show_histogram(x):
     plt.bar(np.arange(256), n)
     plt.axis([0,255,0,1.1*np.max(n)])
     plt.title('Istogramma di %d' %x)
+    
+def extract_feature(x, P, R, model):
+    y = local_binary_pattern(x, P, R, model)
+    n, b = np.histogram(y.flatten(), bins=np.arange(0,257), density=True)
+    return n
     
 def glob_equaliz(x): 
     y = ex.equalize_hist(x)
