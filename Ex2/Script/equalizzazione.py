@@ -28,3 +28,6 @@ plt.figure()
 plt.bar(np.arange(256), ny)
 plt.axis([0,255,0,1.1*np.max(ny)])
 plt.title('Istogramma di marte.jpg dopo equalizzazione')
+
+test_loss, test_accuracy = lenet.evaluate(x_test, y_test, verbose=True)
+      print(’Test loss:’, test_loss)
