@@ -18,9 +18,16 @@ x = io.imread("frattale.jpg")
 M, N = x.shape
 bitplane = np.zeros((M,N,8), dtype=bool)  # matrice 3D
 
-for i in range (8):
-    bitplane[:,:,i] = bitget(x, i)
-    plt.figure()
-    plt.subplot(2,4,i+1)
-plt.imshow(bitplane[:,:,i], clim=[0,1], cmap="gray")
-plt.title("Bitplane %d" % i)
+for i in range(8):
+    bitplane[:, :, i] = bitget(x, i)
+
+# Mostra tutti i bitplane in una singola figura
+plt.figure(figsize=(12, 6))  # imposta la dimensione della figura
+for i in range(8):
+    plt.subplot(2, 4, i + 1)  # crea una griglia 2x4 per i subplot
+    plt.imshow(bitplane[:, :, i], clim=[0, 1], cmap="gray")
+    plt.title("Bitplane %d" % i)
+    plt.axis('off')  # nasconde gli assi per una visualizzazione più pulita
+
+plt.tight_layout()  # regola automaticamente i layout per prevenire sovrapposizioni
+plt.show()

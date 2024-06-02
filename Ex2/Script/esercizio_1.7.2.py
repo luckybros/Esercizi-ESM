@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Esercizio 1.7.1
-Realizzate l’enhancement globale dell’immagine con equalizzazione dell’istogramma, scrivendo la fun- 
-zione function y = glob equaliz(x), e mostrate l’immagine elaborata
+Esercizio 1.7.2
+poich ́e nemmeno questa operazione risolve il problema ricorrete all’enhancement 
+locale, effettuate cioè l’equalizzazione dell’istogramma su blocchi 3×3 
+dell’immagine e conservate solo il pixel centrale del bloc- co elaborato. 
+A tale scopo scrivete la funzione function y = loc equaliz(x), e mostrate 
+l’immagine elaborata.
 """
 import sys
 sys.path.append('/Users/luketto/Desktop/II Semestre IV Anno/ESM/Esercizi/Librerie')
@@ -22,7 +25,7 @@ plt.bar(np.arange(256), n)
 plt.axis([0,255,0,1.1*np.max(n)])
 plt.title('Istogramma prima')
 
-y = ml.glob_equaliz(x)
+y = ndi.generic_filter(x, ml.loc_equaliz, (3,3))
 
 ny, by = np.histogram(y, np.arange(257))  # istogramma
 

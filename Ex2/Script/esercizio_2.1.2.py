@@ -29,7 +29,7 @@ padding_inferiore_destra = (162, 0)    # Numero di righe da aggiungere sotto e n
 
 marchio_espanso = np.pad(marchio, (padding_superiore_sinistra, padding_inferiore_destra), mode="constant")
 
-lena_marchio = bit.bitset(lena, 0, marchio_espanso)
+lena_marchio = bit.bitset(lena, 7, marchio_espanso)
 
 plt.figure()
 plt.subplot(1,2,1) 

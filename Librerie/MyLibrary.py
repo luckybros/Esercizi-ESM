@@ -77,6 +77,12 @@ def glob_equaliz(x):
     y = 255*y
     return y
 
+def loc_equaliz(b):
+    b = np.reshape(b, (3,3))
+    b = ex.equalize_hist(b/255)
+    y = b[1][1]
+    return y
+
 def smooth(x):
     h = [[1, 2, 1],
          [2, 4, 2],
