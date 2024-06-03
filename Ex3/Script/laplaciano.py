@@ -16,8 +16,9 @@ import skimage.exposure as ex
 import scipy.ndimage as ndi
 
 x = ml.leggiJPG("luna.jpg")
-h = np.array([[0,-1,0],[-1,5,-1],[0,-1,0]], dtype=np.float64)
+h = np.array([[0,-1,0],[-1,4,-1],[0,-1,0]], dtype=np.float64)
 z = ndi.correlate(x, h)
+
 
 ml.showTwoImages(x, z, "Originale", "Filtrata")
 
