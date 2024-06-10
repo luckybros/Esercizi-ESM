@@ -19,7 +19,7 @@ import scipy.ndimage as ndi
 x = np.array([1,2,3,4], dtype=np.float64)
 h = np.array([1,1,1]  , dtype=np.float64)
 
-X = np.fft.fft(x,6)
+X = np.fft.fft(x,6)     # la DFT deve essere realizzata almeno su elem_x + elem_h -1
 H = np.fft.fft(h,6)
 
 Y=X*H

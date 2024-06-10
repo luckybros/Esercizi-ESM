@@ -22,23 +22,24 @@ M,N = x.shape
 m = np.fft.fftshift(np.fft.fftfreq(M))
 n = np.fft.fftshift(np.fft.fftfreq(N))
 l,k = np.meshgrid(n,m)
-D = np.sqrt(k**2+ l**2)
+D = np.sqrt(k**2+l**2)
 D0 = 0.1;
 H =(D<=D0)
 plt.figure();
-plt.imshow(H, clim=[0,1], cmap="gray", extent=(-0.5,+0.5,+0.5,-0.5));
+plt.imshow(H, clim=[0,1], cmap="gray", extent=(-0.5,+0.5,+0.5,-0.5));   # filtro tra 0 ed 1 di colori, in grigio
 
 X = np.fft.fft2(x)
 X = np.fft.fftshift(X)
-X = np.log(1 + np.abs(X))
-plt.imshow(X, clim=[0,1], cmap="gray", extent=(-0.5,+0.5,+0.5,-0.5));
+plt.figure()
+plt.imshow(np.log(1 + np.abs(X)), clim=None, cmap="gray", extent=(-0.5,+0.5,+0.5,-0.5));
 
 Y = H*X
-Y = np.log(1 + np.abs(Y))
-plt.imshow(Y, clim=[0,1], cmap="gray", extent=(-0.5,+0.5,+0.5,-0.5));
+plt.figure()
+plt.imshow(np.log(1 + np.abs(Y)), clim=None, cmap = "gray", extent=(-0.5,+0.5,+0.5,-0.5));
 
 Y = np.fft.ifftshift(Y)
 y = np.real(np.fft.ifft2(Y))
-ml.showImage(y, "lena ricostruita")
+plt.figure()
+plt.imshow(y, clim=[0,255], cmap="gray")
 
 

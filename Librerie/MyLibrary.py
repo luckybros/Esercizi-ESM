@@ -129,5 +129,29 @@ def graph(Y):
     ax = plt.figure().add_subplot(projection='3d')
     l,k = np.meshgrid(n,m)
     ax.plot_surface(l,k,Y, linewidth=0, cmap="jet")
+    
+def gaussLPF(x, sigma):
+    M, N = x.shape
+    m = np.fft.fftshift(np.fft.fftfreq(M))
+    n = np.fft.fftshift(np.fft.fftfreq(N))
+    l, k = np.meshgrid(n, m)
+    D = np.sqrt(k**2 + l**2)
+    
+    H = np.exp(-(D**2) / (2 * sigma**2))  # filtro gaussiano
+    
+    X = np.fft.fft2(x)
+    X = np.fft.fftshift(X)
+    
+    Y = H * X
+    Y = np.fft.ifftshift(Y)
+    y = np.real(np.fft.ifft2(Y))
+    
+    return y
+
+# Esempio di utilizzo (supponendo che x sia un'immagine caricata):
+# x = ml.leggiJPG("lena.jpg")
+# y_filtered = gaussLPF(x, sigma=0.1)
+# ml.showImage(y_filtered, "lena filtrata")
+
 
 #def loc_equaliz(x):
