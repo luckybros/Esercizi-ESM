@@ -118,7 +118,9 @@ def rgb2cmyk(x):
 
 def fourier_transform(x):
     X = np.fft.fft2(x)
-    X = np.log(1+np.abs((np.fft.fftshift(X))))
+    X = np.abs(X)
+    X = np.fft.fftshift(X)
+    X = np.log(1+X)
     return X
 
 def graph(Y):

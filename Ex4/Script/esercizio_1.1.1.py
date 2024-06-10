@@ -20,19 +20,16 @@ import skimage.color as col
 import scipy.ndimage as ndi
 
 circ = ml.leggiJPG("circuito.jpg")
-CIRC = np.fft.fft2(circ)
-CIRC = np.log(1+np.abs((np.fft.fftshift(CIRC))))
+CIRC = ml.fourier_transform(circ)
 ml.showTwoImages(circ, CIRC, "normale", "trasformata")
-ml.graph(CIRC)
+#ml.graph(CIRC)
 
 anelli = ml.leggiJPG("anelli.tif")
-ANELLI = np.fft.fft2(anelli)
-ANELLI = np.log(1+np.abs((np.fft.fftshift(ANELLI))))
+ANELLI = ml.fourier_transform(anelli)
 ml.showTwoImages(anelli, ANELLI, "normale", "trasformata")
-ml.graph(ANELLI)
+#ml.graph(ANELLI)
 
 impronta = ml.leggiJPG("impronta.jpg")
-IMPRONTA = np.fft.fft2(impronta)
-IMPRONTA = np.log(1+np.abs((np.fft.fftshift(IMPRONTA))))
+IMPRONTA = ml.fourier_transform(impronta)
 ml.showTwoImages(impronta, IMPRONTA, "normale", "trasformata")
-ml.graph(IMPRONTA)
+#ml.graph(IMPRONTA)

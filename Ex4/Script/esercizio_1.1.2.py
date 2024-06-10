@@ -20,32 +20,21 @@ import skimage.exposure as ex
 import skimage.color as col
 import scipy.ndimage as ndi
 
-vol = ml.leggiJPG("volto.tif")
-VOL = np.fft.fft2(vol)
+x = np.float64(io.imread("volto.tif"))
+X = np.fft.fft2(x)
+Xf = np.fft.fftshift(X)
+Z = np.log(1 + np.abs(Xf))      # spettro di ampiezza
+Z_f = np.angle(Xf)              # spettro di fase
 
-VOL_M = np.log(1+np.abs((np.fft.fftshift(VOL))))
-VOL_P = np.angle((np.fft.fftshift(VOL)))
+plt.subplot(1,2,1);
+plt.imshow(Z,clim=None,cmap="gray", extent=(-0.5,+0.5,+0.5,-0.5));
+plt.title("Spettro di ampiezza");
+plt.subplot(122);
+plt.imshow(np.angle(Xf), clim=[-np.pi, np.pi], cmap="gray", extent=(-0.5,+0.5,+0.5,-0.5));
+plt.title("Spettro di fase");
 
-ml.showTwoImages(VOL_M, VOL_P, "MODULO", "FASE")
+ym = np.real(np.fft.ifft2(np.abs(X)))              # ricostruzione solo modulo
+yf = np.real(np.fft.ifft2(np.exp(1j*np.angle(X)))) # ricostruzione solo fase
 
-ret = ml.leggiJPG("rettangolo.jpg")
-RET = np.fft.fft2(vol)
-
-RET_M = np.log(1+np.abs((np.fft.fftshift(RET))))
-RET_P = np.angle((np.fft.fftshift(RET)))
-
-vol_mod = np.real(np.fft.ifft2(np.abs(VOL)))
-vol_phase = np.real(np.fft.ifft2(np.angle(VOL)))
-
-rett_mod = np.real(np.fft.ifft2(np.abs(RET)))
-rett_phase = np.real(np.fft.ifft2(np.exp(1j*np.angle(RET))))
-
-VOL_RIC_1 = vol_mod*np.exp(1j*rett_phase) 
-VOL_RIC_2 = rett_mod*np.exp(1j*vol_phase) 
-
-vol_ric_1 = np.fft.ifft2(VOL_RIC_1)
-vol_ric_2 = np.fft.ifft2(VOL_RIC_2)
-
-ml.showImage(vol_ric_1, "prima ricostruzione")
-ml.showImage(vol_ric_2, "seconda ricostruzione")
+ml.showTwoImages(ym, yf, "Ricostruzione spettro di ampiezza", "Ricostruzione spettro di fase")
 

@@ -19,14 +19,17 @@ import skimage.exposure as ex
 import skimage.color as col
 import scipy.ndimage as ndi
 
-k = 15
-h = np.ones((k,k))/(k^2)
+P = 500; Q = 500;
+list_k = [5, 10, 15]
+list_H = []
 
-#N,M = h.shape
-#P = 5*N; Q = 5*M
-
-H = np.fft.fft2(h)
-H = np.abs(np.fft.fftshift(H))
-H = np.log(1+H)
-
-ml.graph(H)
+for k in list_k:
+    h = np.ones((k,k))/(k^2)
+    H = np.fft.fft2(h, (P,Q))
+    H = np.fft.fftshift(H)
+    H = np.abs(H)
+    H = np.log(1 + H)
+    
+    plt.figure();
+    plt.imshow(H, clim=None, cmap="gray", extent=(-0.5,+0.5,+0.5,-0.5));
+    plt.title("Risposta in frequenza del filtro media aritmetica per k=%d" % k)

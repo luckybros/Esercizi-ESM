@@ -19,10 +19,16 @@ import scipy.ndimage as ndi
 x = ml.leggiJPG("rettangolo.jpg")
 M,N = x.shape
 P = 2*M; Q = 2*N
+
 X = np.fft.fft2(x, (P,Q))
+#X = np.abs(X)
+X = np.fft.fftshift(X)
 X = np.abs(X)
 X = np.log(1 + X)
+
 Y = np.fft.fft2(x)
+#Y = np.abs(Y)
+Y = np.fft.fftshift(Y)
 Y = np.abs(Y)
 Y = np.log(1 + Y)
 ml.showTwoImages(X, Y, "con padding", "normale")

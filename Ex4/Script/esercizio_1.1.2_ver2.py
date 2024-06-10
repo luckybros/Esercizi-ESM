@@ -31,4 +31,4 @@ RETT_PHASE = np.exp(1j*np.angle(RET))
 ric_1 = np.real(np.fft.ifft2(VOL_MOD*RETT_PHASE))
 ric_2 = np.real(np.fft.ifft2(RETT_MOD*VOL_PHASE))
 
-ml.showTwoImages(ric_1, ric_2, "ricostruzione1", "ricostruzione2")
+ml.showTwoImages(ric_1, ric_2, "modulo volto, fase rettangolo", "modulo rettangolo, fase volto")

@@ -18,11 +18,12 @@ import scipy.ndimage as ndi
 
 x = ml.leggiJPG("rettangolo.jpg")
 
-X = np.fft.fft2(x)
-X = np.abs(X)
+X = np.fft.fft2(x)  # trasformata di fourier
+X = np.abs(X)       # modulo della trasformata di Fourier
 
-ml.showTwoImages(x, X, "Normale", "Trasformata")
+ml.showTwoImages(x, X, "Normale", "Trasformata")    
 
-Y = np.log(1+np.abs(np.fft.fftshift(X)))
+Y = np.log(1+np.abs(np.fft.fftshift(X)))    # lo Shift trasla le basse frequenze al centro
+                                            # il logaritmo serve a migliorare la visualizzazione
 plt.figure();
-plt.imshow(Y, clim=None, cmap="gray", extent=(-0.5,+0.5,+0.5,-0.5));
+plt.imshow(Y, clim=None, cmap="gray", extent=(-0.5,+0.5,+0.5,-0.5));    # si visualizza nel corretto range
