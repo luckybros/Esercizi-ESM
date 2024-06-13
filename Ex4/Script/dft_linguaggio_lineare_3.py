@@ -27,19 +27,23 @@ D0 = 0.1;
 H =(D<=D0)
 plt.figure();
 plt.imshow(H, clim=[0,1], cmap="gray", extent=(-0.5,+0.5,+0.5,-0.5));   # filtro tra 0 ed 1 di colori, in grigio
+plt.title("Filtro passa alto")
 
 X = np.fft.fft2(x)
 X = np.fft.fftshift(X)
 plt.figure()
 plt.imshow(np.log(1 + np.abs(X)), clim=None, cmap="gray", extent=(-0.5,+0.5,+0.5,-0.5));
+plt.title("Trasformata dell'ingresso")
 
 Y = H*X
 plt.figure()
 plt.imshow(np.log(1 + np.abs(Y)), clim=None, cmap = "gray", extent=(-0.5,+0.5,+0.5,-0.5));
+plt.title("Trasformata dell'uscita")
 
 Y = np.fft.ifftshift(Y)
 y = np.real(np.fft.ifft2(Y))
 plt.figure()
 plt.imshow(y, clim=[0,255], cmap="gray")
+plt.title("Uscita")
 
 

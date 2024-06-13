@@ -22,7 +22,7 @@ def draw_color_cube(ax=None, size = 8, shade=False):
         import matplotlib.pyplot as plt    
         ax = Axes3D(plt.figure()); # crea una figura per i grafici 3d
     
-    voxels = _np.ones((size,size,size), dtype=_np.bool) # voxel del cubo
+    voxels = _np.ones((size,size,size), dtype=np.bool) # voxel del cubo
     r = _np.arange(-1/(2*size), 1+1/(2*size), 1/size)
     x,y,z = _np.meshgrid(r,r,r, indexing='ij') # coordinate dei voxels
     

@@ -148,6 +148,72 @@ def gaussLPF(x, sigma):
     
     return y
 
+
+def rgb_to_hsi(image):
+    # Convert the image to float and normalize
+    #image = image.astype(np.float32) / 255.0
+    R, G, B = image[:,:,0], image[:,:,1], image[:,:,2]
+    
+    # Intensity calculation
+    I = (R + G + B) / 3.0
+    
+    # Saturation calculation
+    min_RGB = np.minimum(np.minimum(R, G), B)
+    S = 1 - (3 / (R + G + B + 1e-6)) * min_RGB
+    
+    # Hue calculation
+    numerator = 0.5 * ((R - G) + (R - B))
+    denominator = np.sqrt((R - G) ** 2 + (R - B) * (G - B))
+    theta = np.arccos(numerator / (denominator + 1e-6))
+    H = np.where(B <= G, theta, 2 * np.pi - theta)
+    H = H / (2 * np.pi)  # Normalize H to be in the range [0, 1]
+    
+    # Combine H, S, and I into one image
+    hsi_image = np.stack((H, S, I), axis=-1)
+    return hsi_image
+
+def hsi_to_rgb(image):
+    # Separare i canali H, S, I
+    H, S, I = image[:,:,0], image[:,:,1], image[:,:,2]
+    H = H * 2 * np.pi  # Convertire H da [0, 1] a [0, 2π]
+
+    # Inizializzare i canali R, G, B
+    R = np.zeros_like(H)
+    G = np.zeros_like(H)
+    B = np.zeros_like(H)
+
+    # Maschere per le diverse regioni di H
+    mask_0_120 = (H >= 0) & (H < 2 * np.pi / 3)
+    mask_120_240 = (H >= 2 * np.pi / 3) & (H < 4 * np.pi / 3)
+    mask_240_360 = (H >= 4 * np.pi / 3) & (H < 2 * np.pi)
+
+    # Convertire i valori RGB per H tra 0 e 120 gradi
+    R[mask_0_120] = I[mask_0_120] * (1 + S[mask_0_120] * np.cos(H[mask_0_120]) / np.cos(np.pi / 3 - H[mask_0_120]))
+    B[mask_0_120] = I[mask_0_120] * (1 - S[mask_0_120])
+    G[mask_0_120] = 3 * I[mask_0_120] - (R[mask_0_120] + B[mask_0_120])
+
+    # Convertire i valori RGB per H tra 120 e 240 gradi
+    H[mask_120_240] -= 2 * np.pi / 3
+    G[mask_120_240] = I[mask_120_240] * (1 + S[mask_120_240] * np.cos(H[mask_120_240]) / np.cos(np.pi / 3 - H[mask_120_240]))
+    R[mask_120_240] = I[mask_120_240] * (1 - S[mask_120_240])
+    B[mask_120_240] = 3 * I[mask_120_240] - (R[mask_120_240] + G[mask_120_240])
+
+    # Convertire i valori RGB per H tra 240 e 360 gradi
+    H[mask_240_360] -= 4 * np.pi / 3
+    B[mask_240_360] = I[mask_240_360] * (1 + S[mask_240_360] * np.cos(H[mask_240_360]) / np.cos(np.pi / 3 - H[mask_240_360]))
+    G[mask_240_360] = I[mask_240_360] * (1 - S[mask_240_360])
+    R[mask_240_360] = 3 * I[mask_240_360] - (G[mask_240_360] + B[mask_240_360])
+
+    # Combinare i canali R, G, B
+    rgb_image = np.stack((R, G, B), axis=-1)
+    
+    # Convertire i valori da [0, 1] a [0, 255]
+    rgb_image = np.clip(rgb_image * 255, 0, 255).astype(np.uint8)
+    return rgb_image
+
+
+# def showSpectrum(x, descrizione):
+    
 # Esempio di utilizzo (supponendo che x sia un'immagine caricata):
 # x = ml.leggiJPG("lena.jpg")
 # y_filtered = gaussLPF(x, sigma=0.1)
